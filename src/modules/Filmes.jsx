@@ -21,7 +21,7 @@ export default function Filmes(){
 
     return(
         <>
-        <Header />
+        <Header>CINEFLEX</Header>
         <Main>
             <h1>Selecione o filme</h1>
             <FilmesContainer>

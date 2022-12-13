@@ -6,40 +6,60 @@ import Main from "../components/Main.jsx"
 import axios from "axios";
 import AssentoCard from "../modules/AssentoCard.jsx";
 import Footer from "../components/Footer.jsx";
+import { useNavigate } from "react-router-dom"
 
 
 export default function Assentos(props){
 
     const { idSessao } = useParams();
-    const [dados, setDados] = useState([]);
+    const [dados, setDados] = useState(undefined);
     const [selecionados, setSelecionados] = useState([]);
     const [nome, setNome] = useState("");
     const [cpf, setCPF] = useState("");
+    const navigate = useNavigate()
     useEffect(() => {
         axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`)
         .then((res) => {
              setDados(res.data);
              console.log("Dados: ");
              console.log(dados);
+             console.log(res.data);
         })
     }, []
-    )
+    );
+
+    function handleSeats(seat) {
+        if (seat.isAvailable === false) {
+            alert("Esse assento não está disponível")
+        } else {
+            const isSelected = selecionados.some(s => seat.id === s.id)
+            if (isSelected) {
+                const newList = selecionados.filter(s => seat.id !== s.id)
+                setSelecionados(newList)
+            } else {
+                setSelecionados([...selecionados, seat])
+            }
+        };
+        console.log(selecionados);
+    }
 
     function postar(e){
        //usenavigate
        e.preventDefault();
-       let pedido = {selecionados, nome, cpf};
-       const req = axios.post("https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many", pedido)
-       req.then((res) => {
+       let pedido = {ids: selecionados, name: nome, cpf};
+       axios.post("https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many", pedido)
+       .then((res) => {
               let done = {...pedido,
-                filme: dados.movie.title,
-                diasemana: dados.day.weekday,
-                horario: dados.name,
+                movie: dados.movie.title,
+                date: dados.day.date,
+                hour: dados.name,
                 };
                 props.setSucesso({...done});
-                //useNavigate
-       }
-       )
+                setSelecionados([]);
+                navigate("/sucesso");
+       })
+       .catch(err => alert(err.response.data));
+
     }
 
     function definirnome(e){
@@ -50,17 +70,30 @@ export default function Assentos(props){
         setCPF(e.target.value);
     }
 
+    if(!dados){
+        return(
+            <h1>Carregando...</h1>
+        )
+    }
+
     return(
         <>
-        <Header/>
+        <Header>CINEFLEX</Header>
         <Main>
             <h1>Selecione o(s) assento(s)</h1>
             <AssentosContainer>
             {dados.seats.map((a) => {
                 return(
-                     <AssentoCard id={a.id} disponivel={a.isAvailable} selecionados={selecionados} setSelecionados={setSelecionados}/>
+                     <AssentoCard id={a.id} 
+                     disponivel={a.isAvailable} 
+                     selecionados={selecionados} 
+                     handleSeats={handleSeats}
+                     seat={a}
+                     isSelected={selecionados.some(s => a.id === s.id)}
+                     />
                 )
             })}
+
             </AssentosContainer>
             <Dados onSubmit={postar}>
                 <label htmlFor='nome'>
@@ -75,11 +108,11 @@ export default function Assentos(props){
             <button>Reservar assento(s)</button>
         </Main>
         <Footer>
-                <img src={dados.movie.posterURL} />
-                <div>
-                    <h2>{dados.movie.title}</h2>
-                    <h2>{dados.day.weekday} - {dados.day.date}</h2>
-                </div>
+            <img src={dados.movie.posterURL} />
+            <div>
+                <h2>{dados.movie.title}</h2>
+                <h2>{dados.day.weekday} - {dados.day.date}</h2>
+            </div>
         </Footer>
         </>
     )
@@ -89,14 +122,17 @@ export default function Assentos(props){
 const AssentosContainer = styled.div`
 width: 80%;
 display: flex;
-gap: 4%;
+gap: 5px;
 flex-wrap: wrap;
+justify-content: center;
+margin-bottom: 25px;
 `
 const Dados = styled.form`
 display: flex;
 flex-direction: column;
 width: 80%;
 gap: 7px;
+margin-bottom: 25px;
 
 label{
  display: flex;
@@ -129,4 +165,3 @@ color: #AFAFAF;
 `
 
 //form styled
-

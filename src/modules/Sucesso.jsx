@@ -15,7 +15,7 @@ export default function Sucesso(props){
 
    return(
     <>
-    <Header />
+    <Header>CINEFLEX</Header>
     <Main>
         <div>Pedido feito com sucesso</div>
         <SucessoContainer>

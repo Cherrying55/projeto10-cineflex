@@ -32,7 +32,7 @@ export default function Sessoes(){
 
     return(
         <>
-        <Header />
+        <Header>CINEFLEX</Header>
         <Main>
             <SessoesContainer>
                 <h1>Selecione o Horário</h1>
@@ -57,7 +57,7 @@ export default function Sessoes(){
 
 const SessoesContainer = styled.div`
 display: flex;
-width: 100%;
+width: 90%;
 flex-direction: column;
 
 h1{

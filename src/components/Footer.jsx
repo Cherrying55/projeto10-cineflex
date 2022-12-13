@@ -1,19 +1,13 @@
 import styled from "styled-components";
 
-export default function Footer(){
-    return(
-        <FooterStyle>
-        </FooterStyle>
-    )
-}
-
-const FooterStyle = styled.footer`
+const Footer = styled.footer`
 width: 100%;
 background: #DFE6ED;
 display: flex;
 gap: 5%;
 align-items: center;
 height: 117px;
+padding-left: 8px;
 img{
     width: 48px;
     height: 72px;
@@ -36,3 +30,5 @@ div{
     gap: 2px;
 }
 `
+
+export default Footer;

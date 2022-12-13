@@ -30,12 +30,14 @@ font-style: normal;
 font-weight: 400;
 font-size: 20px;
 color: #293845;
+margin-bottom: 5px;
 }
 `
 
 const ButtonContainer = styled.div`
 display: flex;
 gap: 8px;
+margin-bottom: 10px; 
 
 button{
     color: #FFFFFF;
@@ -51,5 +53,9 @@ background: #E8833A;
 border-radius: 3px;
 width: 82px;
 height: 43px;
+}
+
+a{
+    text-decoration: none;
 }
 `
