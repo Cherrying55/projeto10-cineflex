@@ -16,9 +16,11 @@ export default function Assentos(props){
     const [nome, setNome] = useState("");
     const [cpf, setCPF] = useState("");
     useEffect(() => {
-        const req = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`)
-        req.then((res) => {
-             setDados(res.data)
+        axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`)
+        .then((res) => {
+             setDados(res.data);
+             console.log("Dados: ");
+             console.log(dados);
         })
     }, []
     )

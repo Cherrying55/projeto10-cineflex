@@ -11,7 +11,7 @@ export default function SessaoCard (props) {
            props.horarios.map(
                 (h) => {
                     return(
-                        <Link to={`/${h.id}/seats`}>
+                        <Link to={`/assentos/${h.id}`}>
                         <button>{h.name}</button>
                         </Link>
                     )

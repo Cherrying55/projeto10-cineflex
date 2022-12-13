@@ -4,12 +4,15 @@ import { useState } from "react";
 import Filmes from "./modules/Filmes.jsx";
 import Assentos from "./modules/Assentos.jsx";
 import Sucesso from "./modules/Sucesso.jsx";
+import GlobalStyle from "./GlobalStyle";
 
 export default function App(){
 
     const [sucesso, setSucesso] = useState({});
 
     return(
+        <>
+        <GlobalStyle />
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Filmes />} />
@@ -18,5 +21,6 @@ export default function App(){
                 <Route path="/sucesso" element={<Sucesso sucesso={sucesso}/>} />
             </Routes>
         </BrowserRouter>
+        </>
     )
 }

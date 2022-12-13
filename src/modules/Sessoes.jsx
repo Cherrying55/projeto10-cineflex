@@ -11,16 +11,24 @@ import SessaoCard from "../modules/SessaoCard.jsx"
 export default function Sessoes(){
 
     const { idFilme } = useParams();
+    const [sessoes, setSessoes] = useState(undefined)
 
-    const [sessoes, setSessoes] = useState(undefined);
+    useEffect(
+        () => {
+            axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${idFilme}/showtimes`)
+            .then((res) => {
+                console.log("Sessoes");
+                console.log(res.data);
+                setSessoes(res.data);
+                
+            })
+            .catch(err => console.log(err.response.data));
+        }, []
+    );
 
-    useEffect(() => {
-        axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${idFilme}/showtimes`)
-        .then((res) => 
-             setSessoes(res.data)
-        )
-        .catch(err => console.log(err.response.data))
-    }, [])
+    if (!sessoes) {
+        return <div>Carregando...</div>
+    };
 
     return(
         <>
@@ -32,7 +40,7 @@ export default function Sessoes(){
                     sessoes.days.map(
                         (s) => {
                             return(
-                                <SessaoCard semana={s.weekday} data={s.date} horarios={s.showtime} />
+                                <SessaoCard semana={s.weekday} data={s.date} horarios={s.showtimes} />
                             )
                         }
                     )
@@ -65,3 +73,4 @@ font-size: 24px;
 line-height: 28px;
 }
 `
+
