@@ -1,4 +1,9 @@
 import { useState, useEffect } from 'react';
+import Header from "../components/Header.jsx";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import Main from "../components/Main.jsx"
+import axios from "axios";
 
 
 export default function Filmes(){
@@ -6,9 +11,8 @@ export default function Filmes(){
     const [filmes, setFilmes] = useState([])
     useEffect(
         () => {
-            const requisiçao = axios.get("https://mock-api.driven.com.br/api/v8/cineflex/movies");
-
-            requisicao.then((res) => {
+            axios.get("https://mock-api.driven.com.br/api/v8/cineflex/movies")
+            .then((res) => {
                 setFilmes(res.data.message);
             });
         }, []
@@ -20,7 +24,7 @@ export default function Filmes(){
         <Main>
             <h1>Selecione o filme</h1>
             <FilmesContainer>
-                {filmes.map(() => {
+                {filmes.map((f) => {
                     return(
                         <FilmeCard id={f.id} img={f.posterURL}></FilmeCard>
                     )

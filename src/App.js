@@ -1,5 +1,9 @@
-import Sessoes from "./modules/Sessoes";
-
+import Sessoes from "./modules/Sessoes.jsx";
+import { BrowserRouter, Routes , Route, Link } from "react-router-dom"
+import { useState } from "react";
+import Filmes from "./modules/Filmes.jsx";
+import Assentos from "./modules/Assentos.jsx";
+import Sucesso from "./modules/Sucesso.jsx";
 
 export default function App(){
 

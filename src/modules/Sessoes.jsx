@@ -1,24 +1,30 @@
-import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import Header from "../components/Header.jsx";
+import styled from "styled-components";
+import Main from "../components/Main.jsx"
+import axios from "axios";
+import Footer from "../components/Footer.jsx"
+import SessaoCard from "../modules/SessaoCard.jsx"
 
 
 export default function Sessoes(){
 
     const { idFilme } = useParams();
 
-    const [sessoes, setSessoes] = useState([]);
+    const [sessoes, setSessoes] = useState(undefined);
 
     useEffect(() => {
-        const req = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${idFilme}/showtimes`);
-
-        req.then((res) => {
+        axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${idFilme}/showtimes`)
+        .then((res) => 
              setSessoes(res.data)
-        })
+        )
+        .catch(err => console.log(err.response.data))
     }, [])
 
-    
-
     return(
+        <>
+        <Header />
         <Main>
             <SessoesContainer>
                 <h1>Selecione o Horário</h1>
@@ -33,7 +39,29 @@ export default function Sessoes(){
                 }
             </SessoesContainer>
         </Main>
+        <Footer>
+            <img src={sessoes.posterURL} />
+            <h2>{sessoes.title}</h2>
+        </Footer>
+        </>
     )
 };
 
-//Horario styleddiv
+const SessoesContainer = styled.div`
+display: flex;
+width: 100%;
+flex-direction: column;
+
+h1{
+    height: 98px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #293845;
+    font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 24px;
+line-height: 28px;
+}
+`

@@ -1,21 +1,4 @@
-
-
-const Header = styled.header`
-background: #C3CFD9;
-height: 67px;
-display: flex;
-justify-content: center;
-align-items: center;
-width: 100%;
-font-family: 'Roboto';
-font-style: normal;
-font-weight: 400;
-font-size: 34px;
-line-height: 40px;
-color: #E8833A;
-`
-
-export default Header;
+import styled from "styled-components";
 
 const Main = styled.div`
 background: white;
@@ -36,4 +19,22 @@ h1{
     text-align: center;
     justify-content: center;
 }
+
+button{
+    width: 225px;
+height: 42px;
+background: #E8833A;
+border-radius: 3px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 21px;
+color: #FFFFFF;
+}
 `
+
+export default Main;
